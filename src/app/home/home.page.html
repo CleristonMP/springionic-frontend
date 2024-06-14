@@ -1,16 +1,4 @@
-<!-- <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>Home</ion-title>
-  </ion-toolbar>
-</ion-header> -->
-
 <ion-content [fullscreen]="true">
-  <!-- <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Home</ion-title>
-    </ion-toolbar>
-  </ion-header> -->
-
   <ion-text>
     <h3>Sistema de pedidos</h3>
   </ion-text>
@@ -19,10 +7,10 @@
 
   <form>
     <ion-item>
-      <ion-input label="Email" labelPlacement="floating"></ion-input>
+      <ion-input [(ngModel)]="creds.email" name="email" label="Email" labelPlacement="floating"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-input label="Senha" labelPlacement="floating" type="password"></ion-input>
+      <ion-input [(ngModel)]="creds.password" name="password" label="Senha" labelPlacement="floating" type="password"></ion-input>
     </ion-item>
     <div class="btn-container">
       <ion-button expand="block" (click)="login()">Entrar</ion-button>
