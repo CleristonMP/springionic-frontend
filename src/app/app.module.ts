@@ -9,6 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { CategoryService } from './service/domain/category.service';
 import { errorInterceptor } from 'src/interceptors/error-interceptor';
+import { AuthService } from './service/auth.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -20,7 +21,8 @@ import { errorInterceptor } from 'src/interceptors/error-interceptor';
     provideHttpClient(withInterceptors([
       errorInterceptor
     ])), 
-    CategoryService
+    CategoryService,
+    AuthService
   ],
   bootstrap: [AppComponent],
 })

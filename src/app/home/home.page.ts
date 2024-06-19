@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
 import { CredentialsDTO } from 'src/models/credentials.dto';
+import { AuthService } from '../service/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -14,7 +15,11 @@ export class HomePage implements OnInit {
     email: '', password: ''
   }
 
-  constructor(private router: Router, public menu: MenuController) { }
+  constructor(
+    private router: Router, 
+    public menu: MenuController,
+    public auth: AuthService
+  ) { }
 
   ionViewWillEnter() {
     this.menu.swipeGesture(false);
@@ -28,8 +33,13 @@ export class HomePage implements OnInit {
   }
 
   login() {
+    this.auth.authenticate(this.creds).subscribe({
+      next: resp => {
+        console.log(resp.headers.get('Authorization'));
+        this.router.navigate(['categories'])
+      },
+      error: err => console.error(err)      
+    })
     console.log(this.creds);
-    
-    this.router.navigate(['categories'])
   }
 }
