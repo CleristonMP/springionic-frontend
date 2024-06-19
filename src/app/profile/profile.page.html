@@ -1,6 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    
+
     <ion-menu-toggle auto-hide="false">
       <ion-item>
         <ion-icon name="menu"></ion-icon>
@@ -10,6 +10,11 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  {{ email }}
+<ion-content [fullscreen]="true" class="profile-ctr">
+  <!-- {{ email }} -->
+  <ion-avatar class="profile-img-ctr">
+    <img class="profile-img" [src]="client?.imageUrl || 'assets/imgs/avatar-blank.png'">
+  </ion-avatar>
+  <h2 text-center>{{client?.name}}</h2>
+  <p text-center>{{client?.email}}</p>
 </ion-content>
