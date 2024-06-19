@@ -40,6 +40,5 @@ export class HomePage implements OnInit {
       },
       error: err => console.error(err)      
     })
-    console.log(this.creds);
   }
 }
