@@ -11,7 +11,7 @@ import { API_CONFIG } from 'src/config/api.config';
 export class CategoriesPage implements OnInit {
 
   bucketUrl: string = API_CONFIG.bucketBaseUrl;
-  items: CategoryDTO[] = [];
+  items!: CategoryDTO[];
 
   constructor(public categoryService: CategoryService) { }
 
