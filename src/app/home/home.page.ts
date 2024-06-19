@@ -35,7 +35,7 @@ export class HomePage implements OnInit {
   login() {
     this.auth.authenticate(this.creds).subscribe({
       next: resp => {
-        console.log(resp.headers.get('Authorization'));
+        this.auth.successfulLogin(resp);
         this.router.navigate(['categories'])
       },
       error: err => console.error(err)      

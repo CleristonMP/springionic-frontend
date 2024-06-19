@@ -10,6 +10,7 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { CategoryService } from './service/domain/category.service';
 import { errorInterceptor } from 'src/interceptors/error-interceptor';
 import { AuthService } from './service/auth.service';
+import { StorageService } from './service/storage.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -22,7 +23,8 @@ import { AuthService } from './service/auth.service';
       errorInterceptor
     ])), 
     CategoryService,
-    AuthService
+    AuthService,
+    StorageService
   ],
   bootstrap: [AppComponent],
 })
