@@ -12,7 +12,6 @@ import { Observable, catchError, of } from "rxjs";
 export function errorInterceptor(
     req: HttpRequest<unknown>,
     next: HttpHandlerFn): Observable<HttpEvent<unknown>> {
-    console.log("Passou no interceptor");
 
     return next(req)
         .pipe(

@@ -12,6 +12,7 @@ import { errorInterceptor } from 'src/interceptors/error-interceptor';
 import { AuthService } from './service/auth.service';
 import { StorageService } from './service/storage.service';
 import { ClientService } from './service/domain/client.service';
+import { authInterceptor } from 'src/interceptors/auth-interceptor';
 
 @NgModule({
   declarations: [AppComponent],
@@ -20,9 +21,7 @@ import { ClientService } from './service/domain/client.service';
   }), AppRoutingModule],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, 
-    provideHttpClient(withInterceptors([
-      errorInterceptor
-    ])), 
+    provideHttpClient(withInterceptors([authInterceptor, errorInterceptor])), 
     CategoryService,
     AuthService,
     StorageService,
