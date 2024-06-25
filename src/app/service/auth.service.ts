@@ -5,6 +5,7 @@ import { CredentialsDTO } from 'src/models/credentials.dto';
 import { LocalUser } from 'src/models/local_user';
 import { StorageService } from './storage.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class AuthService {
 
   jwtHelper: JwtHelperService = new JwtHelperService();
 
-  constructor(public http: HttpClient, public storage: StorageService) { }
+  constructor(public http: HttpClient, public storage: StorageService, public router: Router) { }
 
   authenticate(creds: CredentialsDTO) {
     return this.http.post(`${API_CONFIG.baseUrl}/auth/login`, creds, {
@@ -44,5 +45,6 @@ export class AuthService {
 
   logout() {
     this.storage.setLocalUser(null);
+    this.router.navigate(['/']);
   }
 }
