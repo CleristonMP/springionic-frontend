@@ -52,4 +52,8 @@ export class HomePage implements OnInit {
       error: err => console.error(err)      
     })
   }
+
+  signup() {    
+    this.router.navigate(['signup']);
+  }
 }

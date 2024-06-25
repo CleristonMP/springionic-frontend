@@ -1,0 +1,77 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-grid>
+      <ion-row class="ion-justify-content-start">
+        <ion-col size="3">
+          <ion-item (click)="goBack()" lines="none">
+            <ion-icon name="arrow-back-outline"></ion-icon>
+          </ion-item>
+        </ion-col>
+        <ion-col class="ion-align-self-center">
+          <ion-title>Signup</ion-title>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form (ngSubmit)="signupUser(); $event.preventDefault()">
+    <ion-item>
+      <ion-input name="name" type="text" label="Nome*" labelPlacement="floating"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input name="email" type="text" label="Email*" labelPlacement="floating"></ion-input>
+    </ion-item>
+
+    <ion-radio-group value="1" name="type">
+      <span>Tipo de cliente</span>
+      <ion-radio value="1" labelPlacement="start">Pessoa física</ion-radio>
+      <ion-radio value="2" labelPlacement="start">Pessoa jurídica</ion-radio>
+    </ion-radio-group>
+
+    <ion-item>
+      <ion-input name="cpfOrCnpj" type="text" label="CPF ou CNPJ" labelPlacement="floating"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input name="password" type="password" label="Senha*" labelPlacement="floating"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input name="publicPlace" type="text" label="Logradouro*" labelPlacement="floating"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input name="number" type="text" label="Número*" labelPlacement="floating"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input name="complement" type="text" label="Complemento" labelPlacement="floating"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input name="district" type="text" label="Bairro" labelPlacement="floating"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input name="zipCode" type="text" label="CEP*" labelPlacement="floating"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input name="phone1" type="text" label="Telefone 1*" labelPlacement="floating"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input name="phone2" type="text" label="Telefone 2*" labelPlacement="floating"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input name="phone3" type="text" label="Telefone 3*" labelPlacement="floating"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-select name="stateId" label="Estado*" label-placement="stacked" (ionChange)="updateCities()">
+        <ion-select-option value="1">Minas Gerais</ion-select-option>
+        <ion-select-option value="2">São Paulo</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-select name="cityId" label="Cidade*" label-placement="stacked">
+        <ion-select-option value="1">Uberlândia</ion-select-option>
+        <ion-select-option value="2">Campinas</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-button expand="block" type="submit">Criar conta</ion-button>
+  </form>
+</ion-content>
