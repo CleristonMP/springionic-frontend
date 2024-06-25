@@ -14,7 +14,10 @@ export class AuthService {
 
   jwtHelper: JwtHelperService = new JwtHelperService();
 
-  constructor(public http: HttpClient, public storage: StorageService, public router: Router) { }
+  constructor(
+    private http: HttpClient, 
+    private storage: StorageService, 
+    private router: Router) { }
 
   authenticate(creds: CredentialsDTO) {
     return this.http.post(`${API_CONFIG.baseUrl}/auth/login`, creds, {

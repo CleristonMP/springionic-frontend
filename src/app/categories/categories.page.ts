@@ -13,7 +13,7 @@ export class CategoriesPage implements OnInit {
   bucketUrl: string = API_CONFIG.bucketBaseUrl;
   items!: CategoryDTO[];
 
-  constructor(public categoryService: CategoryService) { }
+  constructor(private categoryService: CategoryService) { }
 
   ngOnInit() {
     this.categoryService.findAll().subscribe({

@@ -15,8 +15,8 @@ export class ProfilePage implements OnInit {
   client: ClientDTO | undefined;
 
   constructor(
-    public storage: StorageService,
-    public clientService: ClientService,
+    private storage: StorageService,
+    private clientService: ClientService,
     private router: Router) { }
 
   ngOnInit() {

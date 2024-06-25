@@ -16,58 +16,66 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <form (ngSubmit)="signupUser(); $event.preventDefault()">
+  <form [formGroup]="signupForm" (ngSubmit)="signupUser(); $event.preventDefault()">
     <ion-item>
-      <ion-input name="name" type="text" label="Nome*" labelPlacement="floating"></ion-input>
+      <ion-input formControlName="name" type="text" label="Nome*" labelPlacement="floating"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-input name="email" type="text" label="Email*" labelPlacement="floating"></ion-input>
+      <ion-input formControlName="email" type="text" label="Email*" labelPlacement="floating"></ion-input>
     </ion-item>
 
-    <ion-radio-group value="1" name="type">
-      <span>Tipo de cliente</span>
-      <ion-radio value="1" labelPlacement="start">Pessoa física</ion-radio>
-      <ion-radio value="2" labelPlacement="start">Pessoa jurídica</ion-radio>
-    </ion-radio-group>
+    <ion-list>
+      <ion-list-header>
+        <ion-label>Tipo de cliente</ion-label>
+      </ion-list-header>
+      <ion-radio-group value="1" formControlName="type">
+        <ion-item>
+          <ion-radio value="1" labelPlacement="start">Pessoa física</ion-radio><br />
+        </ion-item>
+        <ion-item>
+          <ion-radio value="2" labelPlacement="start">Pessoa jurídica</ion-radio>
+        </ion-item>
+      </ion-radio-group>
+    </ion-list>
 
     <ion-item>
-      <ion-input name="cpfOrCnpj" type="text" label="CPF ou CNPJ" labelPlacement="floating"></ion-input>
+      <ion-input formControlName="cpfOrCnpj" type="text" label="CPF ou CNPJ" labelPlacement="floating"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-input name="password" type="password" label="Senha*" labelPlacement="floating"></ion-input>
+      <ion-input formControlName="password" type="password" label="Senha*" labelPlacement="floating"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-input name="publicPlace" type="text" label="Logradouro*" labelPlacement="floating"></ion-input>
+      <ion-input formControlName="publicPlace" type="text" label="Logradouro*" labelPlacement="floating"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-input name="number" type="text" label="Número*" labelPlacement="floating"></ion-input>
+      <ion-input formControlName="number" type="text" label="Número*" labelPlacement="floating"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-input name="complement" type="text" label="Complemento" labelPlacement="floating"></ion-input>
+      <ion-input formControlName="complement" type="text" label="Complemento" labelPlacement="floating"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-input name="district" type="text" label="Bairro" labelPlacement="floating"></ion-input>
+      <ion-input formControlName="district" type="text" label="Bairro" labelPlacement="floating"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-input name="zipCode" type="text" label="CEP*" labelPlacement="floating"></ion-input>
+      <ion-input formControlName="zipCode" type="text" label="CEP*" labelPlacement="floating"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-input name="phone1" type="text" label="Telefone 1*" labelPlacement="floating"></ion-input>
+      <ion-input formControlName="phone1" type="text" label="Telefone 1*" labelPlacement="floating"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-input name="phone2" type="text" label="Telefone 2*" labelPlacement="floating"></ion-input>
+      <ion-input formControlName="phone2" type="text" label="Telefone 2*" labelPlacement="floating"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-input name="phone3" type="text" label="Telefone 3*" labelPlacement="floating"></ion-input>
+      <ion-input formControlName="phone3" type="text" label="Telefone 3*" labelPlacement="floating"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-select name="stateId" label="Estado*" label-placement="stacked" (ionChange)="updateCities()">
+      <ion-select formControlName="stateId" label="Estado*" label-placement="stacked" (ionChange)="updateCities()">
         <ion-select-option value="1">Minas Gerais</ion-select-option>
         <ion-select-option value="2">São Paulo</ion-select-option>
       </ion-select>
     </ion-item>
     <ion-item>
-      <ion-select name="cityId" label="Cidade*" label-placement="stacked">
+      <ion-select formControlName="cityId" label="Cidade*" label-placement="stacked">
         <ion-select-option value="1">Uberlândia</ion-select-option>
         <ion-select-option value="2">Campinas</ion-select-option>
       </ion-select>

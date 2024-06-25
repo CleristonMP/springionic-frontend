@@ -13,12 +13,13 @@ import { AuthService } from './service/auth.service';
 import { StorageService } from './service/storage.service';
 import { ClientService } from './service/domain/client.service';
 import { authInterceptor } from 'src/interceptors/auth-interceptor';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [BrowserModule, IonicModule.forRoot({
     swipeBackEnabled: false
-  }), AppRoutingModule],
+  }), AppRoutingModule, ReactiveFormsModule],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, 
     provideHttpClient(withInterceptors([authInterceptor, errorInterceptor])), 

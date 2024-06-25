@@ -9,7 +9,7 @@ import { CategoryDTO } from 'src/models/category.dto';
 })
 export class CategoryService {
 
-  constructor(public http: HttpClient) { }
+  constructor(private http: HttpClient) { }
 
   findAll(): Observable<CategoryDTO[]> {
     return this.http.get<CategoryDTO[]>(`${API_CONFIG.baseUrl}/categories`);

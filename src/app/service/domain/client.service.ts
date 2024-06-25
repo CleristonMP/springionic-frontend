@@ -10,7 +10,7 @@ import { API_CONFIG } from 'src/config/api.config';
 })
 export class ClientService {
 
-  constructor(public http: HttpClient, public storage: StorageService) { }
+  constructor(private http: HttpClient, private storage: StorageService) { }
 
   findByEmail(email: string): Observable<ClientDTO> {
     return this.http.get<ClientDTO>(`${API_CONFIG.baseUrl}/clients/email?value=${email}`);

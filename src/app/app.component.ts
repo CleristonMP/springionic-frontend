@@ -10,11 +10,9 @@ export class AppComponent {
     { title: 'Profile', url: 'profile', icon: 'person' },
     { title: 'Categorias', url: 'categories', icon: 'grid' },
   ];
-  constructor(public authService: AuthService) {}
+  constructor(private authService: AuthService) {}
 
-  logout(): void {
-    console.log('clicou');
-    
+  logout(): void {   
     this.authService.logout();
   }
 }
