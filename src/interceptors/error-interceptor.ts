@@ -9,9 +9,9 @@ export function errorInterceptor(
     req: HttpRequest<unknown>,
     next: HttpHandlerFn): Observable<HttpEvent<unknown>> {
 
-    let storage = inject(StorageService);
-    let router = inject(Router);
-    let alertCtrl = inject(AlertController);
+    const storage = inject(StorageService);
+    const router = inject(Router);
+    const alertCtrl = inject(AlertController);
 
     return next(req)
         .pipe(

@@ -10,7 +10,7 @@ export class StorageService {
     constructor() { }
 
     getLocalUser(): LocalUser | null {
-        let usr = localStorage.getItem(STORAGE_KEYS.localUser);
+        const usr = localStorage.getItem(STORAGE_KEYS.localUser);
         if (usr == null) {
             return null;
         }

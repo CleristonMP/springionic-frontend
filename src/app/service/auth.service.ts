@@ -21,12 +21,23 @@ export class AuthService {
     })
   }
 
+  refreshToken() {
+    return this.http.post(
+      `${API_CONFIG.baseUrl}/auth/refresh_token`, {}, {
+      observe: 'response',
+      responseType: 'text'
+    });
+  }
+
   successfulLogin(authorizationValue: any) {
-    let tok = authorizationValue["token"];
+    const tok = (typeof authorizationValue === typeof {}) 
+      ? authorizationValue["token"] 
+      : authorizationValue;
     const tokenInfo = this.jwtHelper.decodeToken(tok);
-    let user: LocalUser = {
+
+    const user: LocalUser = {
       token: tok,
-      email: tokenInfo.sub
+      email: tokenInfo ? tokenInfo.sub : ''
     };
     this.storage.setLocalUser(user);
   }

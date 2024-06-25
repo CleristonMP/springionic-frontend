@@ -8,10 +8,10 @@ export function authInterceptor(
     req: HttpRequest<unknown>,
     next: HttpHandlerFn): Observable<HttpEvent<unknown>> {
     
-    let localUser = inject(StorageService).getLocalUser();
+    const localUser = inject(StorageService).getLocalUser();
 
-    let N = API_CONFIG.baseUrl.length;
-    let requestToAPI = req.url.substring(0, N) == API_CONFIG.baseUrl;
+    const N = API_CONFIG.baseUrl.length;
+    const requestToAPI = req.url.substring(0, N) == API_CONFIG.baseUrl;
 
     if (localUser && requestToAPI) {
         const authReq = req.clone({headers: req.headers.set('Authorization', 'Bearer ' + localUser.token)});

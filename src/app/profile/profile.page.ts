@@ -20,7 +20,7 @@ export class ProfilePage implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
-    let localUser = this.storage.getLocalUser();
+    const localUser = this.storage.getLocalUser();
     if (localUser && localUser.email) {
       this.clientService.findByEmail(localUser.email)
         .subscribe({
