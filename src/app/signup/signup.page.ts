@@ -73,7 +73,7 @@ export class SignupPage implements OnInit {
   }
 
   updateCities() {
-    const stateId = this.signupForm.value["stateId"];
+    const stateId = this.signupForm.value["stateId"];        
     this.cityService.findAll(stateId).subscribe({
       next: resp => {
         this.cities = resp;

@@ -20,9 +20,17 @@
     <ion-item>
       <ion-input formControlName="name" type="text" label="Nome*" labelPlacement="floating"></ion-input>
     </ion-item>
+    <ion-note color="danger" class="ion-margin-start"
+      *ngIf="signupForm.controls['name'].dirty && signupForm.controls['name'].errors">
+      Valor inválido
+    </ion-note>
     <ion-item>
       <ion-input formControlName="email" type="text" label="Email*" labelPlacement="floating"></ion-input>
     </ion-item>
+    <ion-note color="danger" class="ion-margin-start"
+      *ngIf="signupForm.controls['email'].dirty && signupForm.controls['email'].errors">
+      Valor inválido
+    </ion-note>
 
     <ion-list>
       <ion-list-header>
@@ -41,15 +49,31 @@
     <ion-item>
       <ion-input formControlName="cpfOrCnpj" type="text" label="CPF ou CNPJ" labelPlacement="floating"></ion-input>
     </ion-item>
+    <ion-note color="danger" class="ion-margin-start"
+      *ngIf="signupForm.controls['cpfOrCnpj'].dirty && signupForm.controls['cpfOrCnpj'].errors">
+      Valor inválido
+    </ion-note>
     <ion-item>
       <ion-input formControlName="password" type="password" label="Senha*" labelPlacement="floating"></ion-input>
     </ion-item>
+    <ion-note color="danger" class="ion-margin-start"
+      *ngIf="signupForm.controls['password'].dirty && signupForm.controls['password'].errors">
+      Valor inválido
+    </ion-note>
     <ion-item>
       <ion-input formControlName="publicPlace" type="text" label="Logradouro*" labelPlacement="floating"></ion-input>
     </ion-item>
+    <ion-note color="danger" class="ion-margin-start"
+      *ngIf="signupForm.controls['publicPlace'].dirty && signupForm.controls['publicPlace'].errors">
+      Valor inválido
+    </ion-note>
     <ion-item>
       <ion-input formControlName="number" type="text" label="Número*" labelPlacement="floating"></ion-input>
     </ion-item>
+    <ion-note color="danger" class="ion-margin-start"
+      *ngIf="signupForm.controls['number'].dirty && signupForm.controls['number'].errors">
+      Valor inválido
+    </ion-note>
     <ion-item>
       <ion-input formControlName="complement" type="text" label="Complemento" labelPlacement="floating"></ion-input>
     </ion-item>
@@ -59,9 +83,17 @@
     <ion-item>
       <ion-input formControlName="zipCode" type="text" label="CEP*" labelPlacement="floating"></ion-input>
     </ion-item>
+    <ion-note color="danger" class="ion-margin-start"
+      *ngIf="signupForm.controls['zipCode'].dirty && signupForm.controls['zipCode'].errors">
+      Valor inválido
+    </ion-note>
     <ion-item>
       <ion-input formControlName="phone1" type="text" label="Telefone 1*" labelPlacement="floating"></ion-input>
     </ion-item>
+    <ion-note color="danger" class="ion-margin-start"
+      *ngIf="signupForm.controls['phone1'].dirty && signupForm.controls['phone1'].errors">
+      Valor inválido
+    </ion-note>
     <ion-item>
       <ion-input formControlName="phone2" type="text" label="Telefone 2*" labelPlacement="floating"></ion-input>
     </ion-item>
@@ -78,6 +110,6 @@
         <ion-select-option *ngFor="let city of cities" [value]="city.id">{{city.name}}</ion-select-option>
       </ion-select>
     </ion-item>
-    <ion-button expand="block" type="submit">Criar conta</ion-button>
+    <ion-button expand="block" type="submit" [disabled]="signupForm.invalid">Criar conta</ion-button>
   </form>
 </ion-content>
