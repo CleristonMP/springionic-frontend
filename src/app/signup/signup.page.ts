@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { MenuController } from '@ionic/angular';
 import { Location } from '@angular/common';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { CityService } from '../service/domain/city.service';
+import { StateService } from '../service/domain/state.service';
+import { StateDTO } from 'src/models/state.dto';
+import { CityDTO } from 'src/models/city.dto';
 
 @Component({
   selector: 'app-signup',
@@ -11,11 +15,15 @@ import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
 export class SignupPage implements OnInit {
 
   public signupForm!: FormGroup;
+  public states!: StateDTO[];
+  public cities!: CityDTO[];
 
   constructor(
     private menu: MenuController,
     private location: Location,
-    private formBuilder: FormBuilder) { }
+    private formBuilder: FormBuilder,
+    private cityService: CityService,
+    private stateService: StateService) { }
 
   ngOnInit() {
     this.signupForm = this.formBuilder.group({
@@ -37,6 +45,17 @@ export class SignupPage implements OnInit {
     })
   }
 
+  ionViewDidEnter() {
+    this.stateService.findAll().subscribe({
+      next: resp => {
+        this.states = resp;
+        this.signupForm.patchValue({stateId: this.states[0].id});
+        this.updateCities();
+      },
+      error: _ => {}
+    })
+  }
+
   ionViewWillEnter() {
     this.menu.swipeGesture(false);
   }
@@ -54,6 +73,13 @@ export class SignupPage implements OnInit {
   }
 
   updateCities() {
+    const stateId = this.signupForm.value["stateId"];
+    this.cityService.findAll(stateId).subscribe({
+      next: resp => {
+        this.cities = resp;
+        this.signupForm.patchValue({cityId: null})
+      },
+      error: _ => {}
+    })
   }
-
 }
