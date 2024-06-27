@@ -4,6 +4,7 @@ import { Router } from "@angular/router";
 import { AlertController } from "@ionic/angular";
 import { Observable, catchError, of } from "rxjs";
 import { StorageService } from "src/app/service/storage.service";
+import { FieldMessage } from "src/models/fieldmessage";
 
 export function errorInterceptor(
     req: HttpRequest<unknown>,
@@ -36,6 +37,10 @@ export function errorInterceptor(
                         handle403(storage, router);
                         break;
 
+                    case 422:
+                        handle422(errorObj, alertCtrl);
+                        break;
+
                     default:
                         handleDefaultEror(errorObj, alertCtrl);
                 }
@@ -66,6 +71,20 @@ function handle403(storage: StorageService, router: Router) {
     router.navigate(['home']);
 }
 
+function handle422(errorObj: any, alertCtrl: AlertController) {
+    const alertProps: AlertProps = {
+        header: 'Erro 422: Validação',
+        message: listErrors(errorObj.errors),
+        backdropDismiss: false,
+        buttons: [
+            {
+                text: 'Ok'
+            }
+        ]
+    }
+    presentAlert(alertCtrl, alertProps);
+}
+
 function handleDefaultEror(errorObj: any, alertCtrl: AlertController) {
     const alertProps: AlertProps = {
         header: 'Erro ' + errorObj.status + ': ' + errorObj.error,
@@ -92,6 +111,14 @@ async function presentAlert(alertCtrl: AlertController, alertProps: AlertProps) 
         ]
     });
     await alert.present();
+}
+
+function listErrors(messages: FieldMessage[]): string {
+    let s: string = '';
+    for (var i = 0; i < messages.length; i++) {
+        s = s + messages[i].fieldName.toUpperCase() + ": " + messages[i].message;
+    }
+    return s;
 }
 
 type AlertProps = {

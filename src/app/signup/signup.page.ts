@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuController } from '@ionic/angular';
+import { AlertController, MenuController } from '@ionic/angular';
 import { Location } from '@angular/common';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { CityService } from '../service/domain/city.service';
 import { StateService } from '../service/domain/state.service';
 import { StateDTO } from 'src/models/state.dto';
 import { CityDTO } from 'src/models/city.dto';
+import { ClientService } from '../service/domain/client.service';
 
 @Component({
   selector: 'app-signup',
@@ -23,7 +24,9 @@ export class SignupPage implements OnInit {
     private location: Location,
     private formBuilder: FormBuilder,
     private cityService: CityService,
-    private stateService: StateService) { }
+    private stateService: StateService,
+    private clientService: ClientService,
+    private alertCtrl: AlertController) { }
 
   ngOnInit() {
     this.signupForm = this.formBuilder.group({
@@ -49,10 +52,10 @@ export class SignupPage implements OnInit {
     this.stateService.findAll().subscribe({
       next: resp => {
         this.states = resp;
-        this.signupForm.patchValue({stateId: this.states[0].id});
+        this.signupForm.patchValue({ stateId: this.states[0].id });
         this.updateCities();
       },
-      error: _ => {}
+      error: _ => { }
     })
   }
 
@@ -69,17 +72,37 @@ export class SignupPage implements OnInit {
   }
 
   signupUser() {
-    console.log('enviou o form');
+    this.clientService.insert(this.signupForm.value).subscribe({
+      next: _ => this.showInsertOk(),
+      error: _ => { }
+    })
   }
 
   updateCities() {
-    const stateId = this.signupForm.value["stateId"];        
+    const stateId = this.signupForm.value["stateId"];
     this.cityService.findAll(stateId).subscribe({
       next: resp => {
         this.cities = resp;
-        this.signupForm.patchValue({cityId: null})
+        this.signupForm.patchValue({ cityId: null })
       },
-      error: _ => {}
+      error: _ => { }
     })
+  }
+
+  async showInsertOk() {
+    const alert = await this.alertCtrl.create({
+      header: 'Sucesso!',
+      message: 'Cadastro efetuado com sucesso',
+      backdropDismiss: false,
+      buttons: [
+          {
+              text: 'Ok',
+              handler: () => {
+                this.location.back();
+              }
+          }
+      ]
+  });
+  await alert.present();
   }
 }
