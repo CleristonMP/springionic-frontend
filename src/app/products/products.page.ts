@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductDTO } from 'src/models/product.dto';
 import { ProductService } from '../service/domain/product.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { API_CONFIG } from 'src/config/api.config';
+import { ProductDetailPage } from '../product-detail/product-detail.page';
 
 @Component({
   selector: 'app-products',
@@ -12,15 +13,20 @@ import { API_CONFIG } from 'src/config/api.config';
 export class ProductsPage implements OnInit {
 
   items!: ProductDTO[];
+  component!: ProductDetailPage;
 
-  constructor(private productService: ProductService, private activayedRoute: ActivatedRoute) { }
+  constructor(
+    private productService: ProductService, 
+    private activatedRoute: ActivatedRoute, 
+    private router: Router
+  ) { }
 
   ngOnInit() {
   }
 
   ionViewDidEnter() {
     let categoryId: any;
-    this.activayedRoute.params.subscribe({
+    this.activatedRoute.params.subscribe({
       next: resp => categoryId = resp
     });
 
@@ -43,5 +49,9 @@ export class ProductsPage implements OnInit {
           error: _ => { }
         });
     }
+  }
+
+  showDetail() {
+    this.router.navigate(['product-detail']);
   }
 }

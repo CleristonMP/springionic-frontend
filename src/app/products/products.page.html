@@ -8,10 +8,11 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" class="ion-padding">
+  <ion-nav-link router-direction="forward" [component]="component"></ion-nav-link>
   <ion-list>
-    <ion-item button *ngFor="let item of items">
+    <ion-item button *ngFor="let item of items" (click)="showDetail()">
       <ion-thumbnail slot="start">
-        <img [src]="item.imageUrl || 'assets/imgs/prod.jpg'">
+        <ion-img [src]="item.imageUrl || 'assets/imgs/prod.jpg'"></ion-img>
       </ion-thumbnail>
       <ion-label>
         <strong>{{item.name}}</strong><br />

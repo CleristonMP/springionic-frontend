@@ -1,0 +1,18 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>ProductDetail</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-card>
+    <img [src]="item?.imageUrl || 'assets/imgs/prod.jpg'"/>
+    <ion-card-header>
+      <ion-card-title>{{item?.name}}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      {{item?.price | currency}}
+    </ion-card-content>
+    <ion-button expand="block" fill="outline">Adicionar ao carrinho</ion-button>
+  </ion-card>
+</ion-content>
