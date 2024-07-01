@@ -4,6 +4,7 @@ import { MenuController } from '@ionic/angular';
 import { CredentialsDTO } from 'src/models/credentials.dto';
 import { AuthService } from '../service/auth.service';
 import { HttpResponse } from '@angular/common/http';
+import { SignupPage } from '../signup/signup.page';
 
 @Component({
   selector: 'app-home',
@@ -15,6 +16,8 @@ export class HomePage implements OnInit {
   creds: CredentialsDTO = {
     email: '', password: ''
   }
+
+  component!: SignupPage;
 
   constructor(
     private router: Router, 
@@ -31,7 +34,7 @@ export class HomePage implements OnInit {
   }
 
   ionViewDidEnter(){    
-    this.auth.refreshToken().subscribe({
+    this.auth.refreshToken()?.subscribe({
       next: (resp: HttpResponse<any>) => {
         this.auth.successfulLogin(resp.headers.get('Authorization')!.substring(7));
         this.router.navigate(['categories'])

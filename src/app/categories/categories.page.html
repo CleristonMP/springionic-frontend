@@ -12,6 +12,7 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
+  <ion-nav-link router-direction="forward" [component]="component"></ion-nav-link>
   <ion-list>
     <ion-item *ngFor="let item of items" button (click)="showProducts(item.id)">
       <ion-thumbnail slot="start">

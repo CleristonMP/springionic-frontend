@@ -15,8 +15,8 @@ export class AuthService {
   jwtHelper: JwtHelperService = new JwtHelperService();
 
   constructor(
-    private http: HttpClient, 
-    private storage: StorageService, 
+    private http: HttpClient,
+    private storage: StorageService,
     private router: Router) { }
 
   authenticate(creds: CredentialsDTO) {
@@ -26,16 +26,19 @@ export class AuthService {
   }
 
   refreshToken() {
-    return this.http.post(
-      `${API_CONFIG.baseUrl}/auth/refresh_token`, {}, {
-      observe: 'response',
-      responseType: 'text'
-    });
+    if (this.storage.getLocalUser()) {
+      return this.http.post(
+        `${API_CONFIG.baseUrl}/auth/refresh_token`, {}, {
+        observe: 'response',
+        responseType: 'text'
+      });
+    }
+    return;
   }
 
   successfulLogin(authorizationValue: any) {
-    const tok = (typeof authorizationValue === typeof {}) 
-      ? authorizationValue["token"] 
+    const tok = (typeof authorizationValue === typeof {})
+      ? authorizationValue["token"]
       : authorizationValue;
     const tokenInfo = this.jwtHelper.decodeToken(tok);
 

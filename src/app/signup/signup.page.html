@@ -1,17 +1,9 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-grid>
-      <ion-row class="ion-justify-content-start">
-        <ion-col size="3">
-          <ion-item (click)="goBack()" lines="none">
-            <ion-icon name="arrow-back-outline"></ion-icon>
-          </ion-item>
-        </ion-col>
-        <ion-col class="ion-align-self-center">
-          <ion-title>Signup</ion-title>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Signup</ion-title>
   </ion-toolbar>
 </ion-header>
 

@@ -3,6 +3,7 @@ import { CategoryService } from '../service/domain/category.service';
 import { CategoryDTO } from 'src/models/category.dto';
 import { API_CONFIG } from 'src/config/api.config';
 import { Router } from '@angular/router';
+import { ProductsPage } from '../products/products.page';
 
 @Component({
   selector: 'app-categories',
@@ -13,6 +14,7 @@ export class CategoriesPage implements OnInit {
 
   bucketUrl: string = API_CONFIG.bucketBaseUrl;
   items!: CategoryDTO[];
+  component!: ProductsPage;
 
   constructor(private categoryService: CategoryService, private router: Router) { }
 

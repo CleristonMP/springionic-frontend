@@ -67,10 +67,6 @@ export class SignupPage implements OnInit {
     this.menu.swipeGesture(true);
   }
 
-  goBack() {
-    this.location.back();
-  }
-
   signupUser() {
     this.clientService.insert(this.signupForm.value).subscribe({
       next: _ => this.showInsertOk(),
