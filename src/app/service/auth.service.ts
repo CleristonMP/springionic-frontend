@@ -6,6 +6,7 @@ import { LocalUser } from 'src/models/local_user';
 import { StorageService } from './storage.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Router } from '@angular/router';
+import { CartService } from './domain/cart.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,9 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     private storage: StorageService,
-    private router: Router) { }
+    private router: Router,
+    private cartService: CartService
+  ) { }
 
   authenticate(creds: CredentialsDTO) {
     return this.http.post(`${API_CONFIG.baseUrl}/auth/login`, creds, {
@@ -47,6 +50,7 @@ export class AuthService {
       email: tokenInfo ? tokenInfo.sub : ''
     };
     this.storage.setLocalUser(user);
+    this.cartService.createOrClearCart();
   }
 
   logout() {

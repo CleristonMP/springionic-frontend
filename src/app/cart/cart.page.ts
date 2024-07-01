@@ -3,6 +3,8 @@ import { CartItem } from 'src/models/cart-item';
 import { ProductService } from '../service/domain/product.service';
 import { API_CONFIG } from 'src/config/api.config';
 import { CartService } from '../service/domain/cart.service';
+import { ProductDTO } from 'src/models/product.dto';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cart',
@@ -13,7 +15,11 @@ export class CartPage implements OnInit {
 
   items!: CartItem[] | undefined;
 
-  constructor(private cartService: CartService, private productService: ProductService) { }
+  constructor(
+    private cartService: CartService, 
+    private productService: ProductService,
+    private router: Router
+  ) { }
 
   ngOnInit() {
     const cart = this.cartService.getCart();
@@ -34,4 +40,23 @@ export class CartPage implements OnInit {
     }
   }
 
+  removeItem(produto: ProductDTO) {
+    this.items = this.cartService.removeProduct(produto).items;
+  }
+
+  increaseQuantity(produto: ProductDTO) {
+    this.items = this.cartService.increaseQuantity(produto).items;
+  }
+
+  decreaseQuantity(produto: ProductDTO) {
+    this.items = this.cartService.decreaseQuantity(produto).items;
+  }
+
+  total() : number {
+    return this.cartService.total();
+  }  
+
+  goOn() {
+    this.router.navigate(['categories']);
+  }
 }
