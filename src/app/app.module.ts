@@ -14,6 +14,7 @@ import { StorageService } from './service/storage.service';
 import { ClientService } from './service/domain/client.service';
 import { authInterceptor } from 'src/interceptors/auth-interceptor';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ProductService } from './service/domain/product.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -26,7 +27,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     CategoryService,
     AuthService,
     StorageService,
-    ClientService
+    ClientService,
+    ProductService
   ],
   bootstrap: [AppComponent],
 })

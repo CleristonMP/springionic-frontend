@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductDTO } from 'src/models/product.dto';
+import { ProductService } from '../service/domain/product.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-products',
@@ -10,24 +12,21 @@ export class ProductsPage implements OnInit {
 
   items!: ProductDTO[];
 
-  constructor() { }
+  constructor(private productService: ProductService, private activayedRoute: ActivatedRoute) { }
 
   ngOnInit() {
   }
 
   ionViewDidEnter() {
-    this.items = [
-      {
-        id: "1",
-        name: 'Mouse',
-        price: 80.99
-      },
-      {
-        id: "2",
-        name: 'Teclado',
-        price: 100.00
-      }
-    ]
-  }
+    let categoryId: any;    
+    this.activayedRoute.params.subscribe({
+      next: resp => categoryId = resp
+    });
 
+   this.productService.findByCategoria(categoryId["categoryId"])
+    .subscribe({
+      next: (resp: any) => this.items = resp.content,
+      error: _ => {}
+    })
+  }
 }

@@ -23,7 +23,7 @@ export class CategoriesPage implements OnInit {
     })
   }
 
-  showProducts() {
-    this.router.navigate(['products']);
+  showProducts(categoryId: string) {
+    this.router.navigate(['products', {categoryId: categoryId}]);
   }
 }
