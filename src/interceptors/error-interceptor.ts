@@ -22,7 +22,12 @@ export function errorInterceptor(
                     errorObj = errorObj.error;
                 }
                 if (!errorObj.status) {
-                    errorObj = JSON.parse(errorObj);
+                    try {
+                        errorObj = JSON.parse(errorObj);
+                    } catch (error) {
+                        console.error("Erro de parse JSON:");
+                        console.error(error);
+                    }
                 }
 
                 console.log("Erro detectado pelo interceptor:");

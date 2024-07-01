@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductDTO } from 'src/models/product.dto';
 import { ProductService } from '../service/domain/product.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { API_CONFIG } from 'src/config/api.config';
+import { CartService } from '../service/domain/cart.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -13,7 +14,12 @@ export class ProductDetailPage implements OnInit {
 
   item: ProductDTO | undefined;
 
-  constructor(private productService: ProductService, private activatedRoute: ActivatedRoute) { }
+  constructor(
+    private productService: ProductService, 
+    private activatedRoute: ActivatedRoute,
+    private cartService: CartService,
+    private router: Router
+  ) { }
 
   ngOnInit() {
     let productId: any;
@@ -43,5 +49,10 @@ export class ProductDetailPage implements OnInit {
           error: _ => { }
         });
     }
+  }
+
+  addToCart(product: ProductDTO) {
+    this.cartService.addProduct(product);
+    this.router.navigate(['cart']);
   }
 }
