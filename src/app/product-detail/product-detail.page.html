@@ -3,11 +3,17 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>ProductDetail</ion-title>
+    <ion-title>Detalhes do Produto</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true" class="ion-padding">
+  <ion-fab slot="fixed" vertical="top" horizontal="end" [edge]="true">
+    <ion-fab-button size="small" (click)="goToCart()">
+      <ion-icon name="cart"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  
   <ion-card>
     <img [src]="item?.imageUrl || 'assets/imgs/prod.jpg'"/>
     <ion-card-header>

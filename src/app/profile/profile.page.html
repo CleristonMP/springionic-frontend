@@ -1,17 +1,15 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-
     <ion-menu-toggle auto-hide="false">
-      <ion-item>
+      <ion-item lines="none">
         <ion-icon name="menu"></ion-icon>
+        <ion-title>Perfil</ion-title>
       </ion-item>
     </ion-menu-toggle>
-
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true" class="profile-ctr">
-  <!-- {{ email }} -->
   <ion-avatar class="profile-img-ctr">
     <img class="profile-img" [src]="client?.imageUrl || 'assets/imgs/avatar-blank.png'">
   </ion-avatar>

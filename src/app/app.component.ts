@@ -7,8 +7,9 @@ import { AuthService } from './service/auth.service';
 })
 export class AppComponent {
   public appPages = [
-    { title: 'Profile', url: 'profile', icon: 'person' },
+    { title: 'Perfil', url: 'profile', icon: 'person' },
     { title: 'Categorias', url: 'categories', icon: 'grid' },
+    { title: 'Carrinho', url: 'cart', icon: 'cart' },
   ];
   constructor(private authService: AuthService) {}
 

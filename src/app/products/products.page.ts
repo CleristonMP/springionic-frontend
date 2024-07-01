@@ -54,4 +54,8 @@ export class ProductsPage implements OnInit {
   showDetail(productId: string) {
     this.router.navigate(['product-detail', {productId: productId}]);
   }
+
+  goToCart() {
+    this.router.navigate(['cart']);
+  }
 }

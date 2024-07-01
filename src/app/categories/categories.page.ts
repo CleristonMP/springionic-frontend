@@ -4,6 +4,7 @@ import { CategoryDTO } from 'src/models/category.dto';
 import { API_CONFIG } from 'src/config/api.config';
 import { Router } from '@angular/router';
 import { ProductsPage } from '../products/products.page';
+import { CartPage } from '../cart/cart.page';
 
 @Component({
   selector: 'app-categories',
@@ -27,5 +28,9 @@ export class CategoriesPage implements OnInit {
 
   showProducts(categoryId: string) {
     this.router.navigate(['products', {categoryId: categoryId}]);
+  }
+
+  goToCart() {
+    this.router.navigate(['cart']);
   }
 }

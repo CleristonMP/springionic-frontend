@@ -55,4 +55,8 @@ export class ProductDetailPage implements OnInit {
     this.cartService.addProduct(product);
     this.router.navigate(['cart']);
   }
+
+  goToCart() {
+    this.router.navigate(['cart']);
+  }
 }

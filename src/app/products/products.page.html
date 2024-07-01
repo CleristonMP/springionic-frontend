@@ -8,6 +8,12 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" class="ion-padding">
+  <ion-fab slot="fixed" vertical="top" horizontal="end" [edge]="true">
+    <ion-fab-button size="small" (click)="goToCart()">
+      <ion-icon name="cart"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  
   <ion-nav-link router-direction="forward" [component]="component"></ion-nav-link>
   <ion-list>
     <ion-item button *ngFor="let item of items" (click)="showDetail(item.id)">
