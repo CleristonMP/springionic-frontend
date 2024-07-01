@@ -40,12 +40,12 @@ export class ProfilePage implements OnInit {
     if (this.client) {
       this.clientService.getImageFromBucket(this.client.id)
         .subscribe({
-          next: response => {
+          next: _ => {
             if (this.client) {
               this.client.imageUrl = `${API_CONFIG.bucketBaseUrl}/cp${this.client.id}.jpg`
             }
           },
-          error: err => { }
+          error: _ => { }
         });
     }
   }
