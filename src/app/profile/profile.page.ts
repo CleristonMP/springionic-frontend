@@ -25,7 +25,7 @@ export class ProfilePage implements OnInit {
       this.clientService.findByEmail(localUser.email)
         .subscribe({
           next: resp => {
-            this.client = resp;
+            this.client = resp as ClientDTO;
             this.getImageIfExists();
           },
           error: err => console.error(err)

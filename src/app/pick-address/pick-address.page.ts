@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AddressDTO } from 'src/models/address.dto';
+import { StorageService } from '../service/storage.service';
+import { ClientService } from '../service/domain/client.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-pick-address',
@@ -10,43 +13,28 @@ export class PickAddressPage implements OnInit {
 
   items!: AddressDTO[];
 
-  constructor() { }
+  constructor(
+    private storage: StorageService,
+    private clientService: ClientService,
+    private router: Router
+  ) { }
 
   ngOnInit() {
-    this.items = [
-      {
-        id: "1",
-        publicPlace: "Rua Quinze de Novembro",
-        number: "300",
-        complement: "Apto 200",
-        district: "Santa Mônica",
-        zipCode: "48293822",
-        city: {
-          id: "1",
-          name: "Uberlândia",
-          state: {
-            id: "1",
-            name: "Minas Gerais"
-          }
-        }
-      },
-      {
-        id: "2",
-        publicPlace: "Rua Alexandre Toledo da Silva",
-        number: "405",
-        complement: "",
-        district: "Centro",
-        zipCode: "88933822",
-        city: {
-          id: "3",
-          name: "São Paulo",
-          state: {
-            id: "2",
-            name: "São Paulo"
-          }
-        }
-      }
-    ]
+    const localUser = this.storage.getLocalUser();
+    if (localUser && localUser.email) {
+      this.clientService.findByEmail(localUser.email)
+        .subscribe({
+          next: (resp: any) => {
+            console.log(resp);
+            
+            this.items = resp['address']
+          },
+          error: err => console.error(err)
+        })
+    }
+    else {
+      this.router.navigate(['home']);
+    }
   }
 
 }
