@@ -48,6 +48,6 @@ export class PickAddressPage implements OnInit {
 
   nextPage(item: AddressDTO) {
     this.order.deliveryAddress = {id: item.id};
-    console.log(this.order);
+    this.router.navigate(['payment', {order: this.order}])
   }
 }

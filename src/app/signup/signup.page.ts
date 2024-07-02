@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController, MenuController } from '@ionic/angular';
 import { Location } from '@angular/common';
-import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { CityService } from '../service/domain/city.service';
 import { StateService } from '../service/domain/state.service';
 import { StateDTO } from 'src/models/state.dto';
