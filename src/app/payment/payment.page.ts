@@ -19,8 +19,8 @@ export class PaymentPage implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router
   ) {
-    const param: string | null = this.activatedRoute.snapshot.paramMap.get('order')
-    this.order = JSON.parse(param || "{}") as OrderDTO;
+    const param = this.activatedRoute.snapshot.paramMap.get('order');
+    this.order = JSON.parse(param || "{}");
 
     this.formGroup = this.formBuilder.group({
       numberOfInstallments: [1, Validators.required],
@@ -33,8 +33,7 @@ export class PaymentPage implements OnInit {
 
   nextPage() {
     this.order.payment = this.formGroup.value;
-    console.log(this.order);
-    
+    this.router.navigate(['order-confirmation', {order: JSON.stringify(this.order)}])
   }
 
 }

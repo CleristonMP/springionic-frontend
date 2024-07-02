@@ -1,0 +1,102 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Confira seu pedido</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Itens do pedido</ion-card-title>
+    </ion-card-header>
+    <ion-card-content class="px-5">
+      <ion-list>
+        <ion-item *ngFor="let item of cartItems" lines="none">
+          <ion-thumbnail slot="start">
+            <img [src]="item.product.imageUrl || 'assets/imgs/prod.jpg'">
+          </ion-thumbnail>
+          <ion-item slot="start" lines="none">
+            <ion-label>
+              <h2>{{item.product.name}}</h2>
+              <p>{{item.product.price | currency}}</p>
+              <p class="nolinebreak">{{item.quantity}}</p>
+            </ion-label>
+          </ion-item>
+            <ion-item slot="end" lines="none">
+              <ion-label>
+                <h5>
+                  {{item.product.price * item.quantity | currency}}
+                </h5>
+              </ion-label>
+            </ion-item>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-item slot="start" lines="none">
+            <ion-label>
+              <h2>Total</h2>
+            </ion-label>
+          </ion-item>
+          <ion-item slot="end" lines="none">
+            <ion-label>
+              <h2 item-end>{{total() | currency}}</h2>
+            </ion-label>
+          </ion-item>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>
+        <h2>
+          Cliente
+        </h2>
+      </ion-card-title>
+    </ion-card-header>
+    <ion-item>
+      <ion-label>
+        <h2>{{client?.name}}</h2>
+        <p>{{client?.email}}</p>
+      </ion-label>
+    </ion-item>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>
+        <h2>
+          Endereço de entrega
+        </h2>
+      </ion-card-title>
+    </ion-card-header>
+    <ion-item>
+      <ion-label>
+        <h2>{{address?.publicPlace}}, {{address?.number}}</h2>
+        <p>{{address?.complement}} {{address?.district}} CEP {{address?.zipCode}}</p>
+        <p>{{address?.city?.name}}, {{address?.city?.state?.name}}</p>
+      </ion-label>
+    </ion-item>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>
+        <h2>
+          Pagamento
+        </h2>
+      </ion-card-title>
+    </ion-card-header>
+    <ion-item *ngIf="order!.payment!['@type']=='paymentByCard'">
+      <ion-label>
+        <h3>Pagamento com cartão</h3>
+        <p>Parcelas: {{order?.payment?.numberOfInstallments}}</p>
+      </ion-label>
+    </ion-item>
+    <ion-item *ngIf="order!.payment!['@type']=='paymentByBankSlip'">
+      <ion-label>
+        <h3>Pagamento com boleto</h3>
+      </ion-label>
+    </ion-item>
+  </ion-card>
+</ion-content>

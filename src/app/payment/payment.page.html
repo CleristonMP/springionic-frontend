@@ -32,6 +32,6 @@
         <ion-select-option *ngFor="let n of installments" [value]="n">{{n}}</ion-select-option>
       </ion-select>
     </ion-item>
-    <ion-button expand="block" type="submit" [disabled]="formGroup.invalid">Próximo</ion-button>
+    <ion-button expand="block" type="submit" [disabled]="formGroup.invalid" routerDirection="root">Próximo</ion-button>
   </form>
 </ion-content>
