@@ -3,6 +3,8 @@ import { AddressDTO } from 'src/models/address.dto';
 import { StorageService } from '../service/storage.service';
 import { ClientService } from '../service/domain/client.service';
 import { Router } from '@angular/router';
+import { OrderDTO } from 'src/models/order.dto';
+import { CartService } from '../service/domain/cart.service';
 
 @Component({
   selector: 'app-pick-address',
@@ -12,11 +14,13 @@ import { Router } from '@angular/router';
 export class PickAddressPage implements OnInit {
 
   items!: AddressDTO[];
+  order!: OrderDTO;
 
   constructor(
     private storage: StorageService,
     private clientService: ClientService,
-    private router: Router
+    private router: Router,
+    private cartService: CartService
   ) { }
 
   ngOnInit() {
@@ -25,9 +29,14 @@ export class PickAddressPage implements OnInit {
       this.clientService.findByEmail(localUser.email)
         .subscribe({
           next: (resp: any) => {
-            console.log(resp);
-            
-            this.items = resp['address']
+            this.items = resp['address'];
+            const cart = this.cartService.getCart();
+            this.order = {
+              client: { id: resp["id"] },
+              deliveryAddress: null,
+              payment: null,
+              items: cart.items.map(x => { return { quantity: x.quantity, product: { id: x.product.id } } })
+            }
           },
           error: err => console.error(err)
         })
@@ -37,4 +46,8 @@ export class PickAddressPage implements OnInit {
     }
   }
 
+  nextPage(item: AddressDTO) {
+    this.order.deliveryAddress = {id: item.id};
+    console.log(this.order);
+  }
 }

@@ -14,7 +14,7 @@
     </ion-list-header>
 
     <ion-item *ngFor="let item of items">
-      <ion-card button class="card-w100">
+      <ion-card button class="card-w100" (click)="nextPage(item)">
         <ion-card-header>
           <ion-card-title>{{item.publicPlace}}, {{item.number}}</ion-card-title>
         </ion-card-header>
@@ -24,6 +24,5 @@
         </ion-card-content>
       </ion-card>
     </ion-item>
-
   </ion-list>
 </ion-content>
