@@ -6,6 +6,7 @@ import { CartService } from '../service/domain/cart.service';
 import { ClientDTO } from 'src/models/client.dto';
 import { AddressDTO } from 'src/models/address.dto';
 import { ClientService } from '../service/domain/client.service';
+import { OrderService } from '../service/domain/order.service';
 
 @Component({
   selector: 'app-order-confirmation',
@@ -23,7 +24,8 @@ export class OrderConfirmationPage implements OnInit {
     private activatedRoute: ActivatedRoute,
     private cartService: CartService,
     private clientService: ClientService,
-    private router: Router
+    private router: Router,
+    private orderService: OrderService
   ) {
     const param: string | null = this.activatedRoute.snapshot.paramMap.get('order')
     this.order = JSON.parse(param || "{}");
@@ -51,4 +53,22 @@ export class OrderConfirmationPage implements OnInit {
     return this.cartService.total();
   }
 
+  checkout() {
+    this.orderService.insert(this.order!).subscribe({
+      next: resp => {
+        this.cartService.createOrClearCart();
+        console.log(resp.headers.get('location'));
+        
+      },
+      error: err => {
+        if (err.status == 403) {
+          this.router.navigate(['home']);
+        }
+      }
+    })
+  }
+
+  goBack() {
+    this.router.navigate(['cart'])
+  }
 }
