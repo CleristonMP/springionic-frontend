@@ -4,6 +4,7 @@ import { ClientDTO } from 'src/models/client.dto';
 import { ClientService } from '../service/domain/client.service';
 import { API_CONFIG } from 'src/config/api.config';
 import { Router } from '@angular/router';
+import { Camera, CameraResultType, Photo } from '@capacitor/camera';
 
 @Component({
   selector: 'app-profile',
@@ -13,6 +14,8 @@ import { Router } from '@angular/router';
 export class ProfilePage implements OnInit {
 
   client: ClientDTO | undefined;
+  picture!: string | undefined;
+  cameraOn: boolean = false;
 
   constructor(
     private storage: StorageService,
@@ -49,4 +52,20 @@ export class ProfilePage implements OnInit {
         });
     }
   }
+
+  takePicture = async () => {
+    this.cameraOn = true;
+
+    const image = await Camera.getPhoto({
+      quality: 90,
+      allowEditing: true,
+      resultType: CameraResultType.Uri
+    })
+    .then((photo: Photo) => {
+      this.picture = photo.webPath
+      this.cameraOn = false;
+    }).catch(err => {
+      console.log(err);
+    });
+  };
 }

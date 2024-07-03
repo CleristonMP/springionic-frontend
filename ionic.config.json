@@ -1,5 +1,7 @@
 {
   "name": "SpringIonic",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "angular"
 }
