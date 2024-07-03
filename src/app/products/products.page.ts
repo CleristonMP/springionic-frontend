@@ -27,6 +27,10 @@ export class ProductsPage implements OnInit {
   }
 
   ionViewDidEnter() {
+    this.getPageData();
+  }
+
+  getPageData() {
     let categoryId: any;
     this.activatedRoute.params.subscribe({
       next: resp => categoryId = resp
@@ -40,8 +44,10 @@ export class ProductsPage implements OnInit {
           this.loadImageUrls();
           loader.then(l => l.dismiss());
         },
-        error: _ => { }
-      })
+        error: _ => {
+          loader.then(l => l.dismiss());
+        }
+      });
   }
 
   loadImageUrls() {
@@ -70,5 +76,12 @@ export class ProductsPage implements OnInit {
 
     loading.present();
     return loading;
+  }
+
+  handleRefresh(event: { target: { complete: () => void; }; }) {
+    this.getPageData();
+    setTimeout(() => {
+      event.target.complete();
+    }, 1000);
   }
 }
