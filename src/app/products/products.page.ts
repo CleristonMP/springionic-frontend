@@ -4,6 +4,7 @@ import { ProductService } from '../service/domain/product.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { API_CONFIG } from 'src/config/api.config';
 import { ProductDetailPage } from '../product-detail/product-detail.page';
+import { LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-products',
@@ -16,9 +17,10 @@ export class ProductsPage implements OnInit {
   component!: ProductDetailPage;
 
   constructor(
-    private productService: ProductService, 
-    private activatedRoute: ActivatedRoute, 
-    private router: Router
+    private productService: ProductService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
+    private loadingCtrl: LoadingController
   ) { }
 
   ngOnInit() {
@@ -30,11 +32,13 @@ export class ProductsPage implements OnInit {
       next: resp => categoryId = resp
     });
 
+    const loader = this.showLoading();
     this.productService.findByCategory(categoryId["categoryId"])
       .subscribe({
         next: (resp: any) => {
           this.items = resp.content;
           this.loadImageUrls();
+          loader.then(l => l.dismiss());
         },
         error: _ => { }
       })
@@ -52,10 +56,19 @@ export class ProductsPage implements OnInit {
   }
 
   showDetail(productId: string) {
-    this.router.navigate(['product-detail', {productId: productId}]);
+    this.router.navigate(['product-detail', { productId: productId }]);
   }
 
   goToCart() {
     this.router.navigate(['cart']);
+  }
+
+  async showLoading() {
+    const loading = await this.loadingCtrl.create({
+      message: 'Aguarde...'
+    });
+
+    loading.present();
+    return loading;
   }
 }
