@@ -4,7 +4,7 @@ import { ProductService } from '../service/domain/product.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { API_CONFIG } from 'src/config/api.config';
 import { ProductDetailPage } from '../product-detail/product-detail.page';
-import { LoadingController } from '@ionic/angular';
+import { InfiniteScrollCustomEvent, LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-products',
@@ -13,8 +13,10 @@ import { LoadingController } from '@ionic/angular';
 })
 export class ProductsPage implements OnInit {
 
-  items!: ProductDTO[];
+  items: ProductDTO[] = [];
   component!: ProductDetailPage;
+  page: number = 0;
+  isLastPage: boolean = false;
 
   constructor(
     private productService: ProductService,
@@ -37,21 +39,32 @@ export class ProductsPage implements OnInit {
     });
 
     const loader = this.showLoading();
-    this.productService.findByCategory(categoryId["categoryId"])
-      .subscribe({
-        next: (resp: any) => {
-          this.items = resp.content;
-          this.loadImageUrls();
-          loader.then(l => l.dismiss());
-        },
-        error: _ => {
-          loader.then(l => l.dismiss());
-        }
-      });
+    if (!this.isLastPage) {
+      this.productService.findByCategory(categoryId["categoryId"], this.page, 10)
+        .subscribe({
+          next: (resp: any) => {
+            let start = this.items.length;
+            this.items = this.items.concat(resp.content);
+            let end = this.items.length - 1;
+            loader.then(l => l.dismiss());
+            this.loadImageUrls(start, end);
+
+            if (resp.last) {
+              this.isLastPage = true;
+            }
+          },
+          error: _ => {
+            loader.then(l => l.dismiss());
+          }
+        });
+    }
+    else {
+      loader.then(l => l.dismiss());
+    }
   }
 
-  loadImageUrls() {
-    for (var i = 0; i < this.items.length; i++) {
+  loadImageUrls(start: number, end: number) {
+    for (var i = start; i <= end; i++) {
       let item = this.items[i];
       this.productService.getSmallImageFromBucket(item.id)
         .subscribe({
@@ -79,9 +92,19 @@ export class ProductsPage implements OnInit {
   }
 
   handleRefresh(event: { target: { complete: () => void; }; }) {
+    this.page = 0;
+    this.items = [];
     this.getPageData();
     setTimeout(() => {
       event.target.complete();
+    }, 1000);
+  }
+
+  onIonInfinite(ev: InfiniteScrollCustomEvent) {
+    this.page++;
+    this.getPageData();
+    setTimeout(() => {
+      (ev).target.complete();
     }, 1000);
   }
 }

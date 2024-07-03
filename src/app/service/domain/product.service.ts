@@ -15,8 +15,14 @@ export class ProductService {
     return this.http.get<ProductDTO>(`${API_CONFIG.baseUrl}/products/${productId}`);
   }
 
-  findByCategory(categoryId: string) {
-    return this.http.get(`${API_CONFIG.baseUrl}/products?categories=${categoryId}`);
+  findByCategory(categoryId: string, page: number = 0, size: number = 12) {
+    return this.http.get(`${API_CONFIG.baseUrl}/products`,{
+      params: {
+        categories: categoryId,
+        page,
+        size,
+      }
+    });
   }
 
   getSmallImageFromBucket(id: string): Observable<any> {
