@@ -14,7 +14,7 @@ import { Camera, CameraResultType, Photo } from '@capacitor/camera';
 export class ProfilePage implements OnInit {
 
   client: ClientDTO | undefined;
-  picture!: string | undefined;
+  picture!: Photo | undefined;
   cameraOn: boolean = false;
 
   constructor(
@@ -23,6 +23,10 @@ export class ProfilePage implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
+    this.getPageData();
+  }
+
+  getPageData() {
     const localUser = this.storage.getLocalUser();
     if (localUser && localUser.email) {
       this.clientService.findByEmail(localUser.email)
@@ -61,11 +65,38 @@ export class ProfilePage implements OnInit {
       allowEditing: true,
       resultType: CameraResultType.Uri
     })
-    .then((photo: Photo) => {
-      this.picture = photo.webPath
-      this.cameraOn = false;
-    }).catch(err => {
-      console.log(err);
-    });
+      .then((photo: Photo) => {
+        this.picture = photo;
+        this.cameraOn = false;
+      }).catch(err => {
+        console.log(err);
+      });
   };
+
+  async sendPicture() {
+    (await this.clientService.uploadPicture(this.picture!))
+      .subscribe({
+        next: _ => {
+          this.picture = undefined;
+          this.getPageData();
+        },
+        error: _ => { }
+      });
+  }
+  
+
+
+  // this.clientService.uploadPicture(this.picture!)
+  //   .then(resp => {
+  //     // this.picture = undefined;
+  //     this.getPageData();
+  //   })
+  //   .catch(err => {
+  //     console.log(err)
+  //   })
+  // }
+
+  cancel() {
+    this.picture = undefined;
+  }
 }

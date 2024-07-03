@@ -16,6 +16,7 @@ import { authInterceptor } from 'src/interceptors/auth-interceptor';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ProductService } from './service/domain/product.service';
 import { CartService } from './service/domain/cart.service';
+import { ImageUtilService } from './service/image-util.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -30,7 +31,8 @@ import { CartService } from './service/domain/cart.service';
     StorageService,
     ClientService,
     ProductService,
-    CartService
+    CartService,
+    ImageUtilService
   ],
   bootstrap: [AppComponent],
 })
