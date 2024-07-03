@@ -7,6 +7,7 @@ import { ClientDTO } from 'src/models/client.dto';
 import { AddressDTO } from 'src/models/address.dto';
 import { ClientService } from '../service/domain/client.service';
 import { OrderService } from '../service/domain/order.service';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-order-confirmation',
@@ -19,13 +20,15 @@ export class OrderConfirmationPage implements OnInit {
   cartItems!: CartItem[];
   client!: ClientDTO | null;
   address!: AddressDTO | null;
+  codOrder!: string;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private cartService: CartService,
     private clientService: ClientService,
     private router: Router,
-    private orderService: OrderService
+    private orderService: OrderService,
+    private navCtrl: NavController
   ) {
     const param: string | null = this.activatedRoute.snapshot.paramMap.get('order')
     this.order = JSON.parse(param || "{}");
@@ -57,8 +60,7 @@ export class OrderConfirmationPage implements OnInit {
     this.orderService.insert(this.order!).subscribe({
       next: resp => {
         this.cartService.createOrClearCart();
-        console.log(resp.headers.get('location'));
-        
+        this.codOrder = this.extractId(resp.headers.get('location') || "");
       },
       error: err => {
         if (err.status == 403) {
@@ -70,5 +72,14 @@ export class OrderConfirmationPage implements OnInit {
 
   goBack() {
     this.router.navigate(['cart'])
+  }
+
+  goToHome() {
+    this.router.navigate(['categories'], { replaceUrl: true })
+  }
+
+  private extractId(location: string): string {
+    let position = location.lastIndexOf('/');
+    return location.substring(position + 1);
   }
 }
