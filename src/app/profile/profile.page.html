@@ -27,10 +27,9 @@
     <ion-item *ngIf="picture">
       <img [src]="picture.webPath">
     </ion-item>
-    <ion-item>
-      <ion-button expand="block" (click)="takePicture()" [disabled]="cameraOn">Camera</ion-button>
-      <ion-button *ngIf="picture" fill="outline" expand="block" (click)="sendPicture()">Enviar imagem</ion-button>
-      <ion-button *ngIf="picture" fill="outline" expand="block" (click)="cancel()">Descartar imagem</ion-button>
-    </ion-item>
+    <ion-button expand="block" (click)="takeCameraPicture()" [disabled]="cameraOn">Camera</ion-button>
+    <ion-button expand="block" (click)="getGalleryPicture()" [disabled]="cameraOn">Galeria</ion-button>
+    <ion-button *ngIf="picture" fill="outline" expand="block" (click)="sendPicture()">Enviar imagem</ion-button>
+    <ion-button *ngIf="picture" fill="outline" expand="block" (click)="cancel()">Descartar imagem</ion-button>
   </ion-card>
 </ion-content>

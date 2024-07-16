@@ -4,7 +4,7 @@ import { ClientDTO } from 'src/models/client.dto';
 import { ClientService } from '../service/domain/client.service';
 import { API_CONFIG } from 'src/config/api.config';
 import { Router } from '@angular/router';
-import { Camera, CameraResultType, Photo } from '@capacitor/camera';
+import { Camera, CameraResultType, CameraSource, Photo } from '@capacitor/camera';
 
 @Component({
   selector: 'app-profile',
@@ -57,13 +57,14 @@ export class ProfilePage implements OnInit {
     }
   }
 
-  takePicture = async () => {
+  takeCameraPicture = async () => {
     this.cameraOn = true;
 
     const image = await Camera.getPhoto({
       quality: 90,
       allowEditing: true,
-      resultType: CameraResultType.Uri
+      resultType: CameraResultType.Uri,
+      source: CameraSource.Camera
     })
       .then((photo: Photo) => {
         this.picture = photo;
@@ -71,6 +72,27 @@ export class ProfilePage implements OnInit {
       }).catch(err => {
         console.log(err);
       });
+
+      return image;
+  };
+
+  getGalleryPicture = async () => {
+    this.cameraOn = true;
+
+    const image = await Camera.getPhoto({
+      quality: 90,
+      allowEditing: true,
+      resultType: CameraResultType.Uri,
+      source: CameraSource.Photos
+    })
+      .then((photo: Photo) => {
+        this.picture = photo;
+        this.cameraOn = false;
+      }).catch(err => {
+        console.log(err);
+      });
+
+      return image;
   };
 
   async sendPicture() {
