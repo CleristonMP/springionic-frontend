@@ -21,8 +21,13 @@ export function errorInterceptor(
                 if (errorObj.error) {
                     errorObj = errorObj.error;
                 }
-                if (!errorObj.status) {
-                    errorObj = JSON.parse(errorObj);
+                // Tentativa de parse JSON com fallback
+                try {
+                    if (typeof errorObj === 'string') {
+                        errorObj = JSON.parse(errorObj);
+                    }
+                } catch (e) {
+                    // Não fazer nada se não for JSON válido
                 }
 
                 console.log("Erro detectado pelo interceptor:");
@@ -42,7 +47,7 @@ export function errorInterceptor(
                         break;
 
                     default:
-                        handleDefaultEror(errorObj, alertCtrl);
+                        handleDefaultError(errorObj, alertCtrl);
                 }
 
                 return of(errorObj);
@@ -85,10 +90,10 @@ function handle422(errorObj: any, alertCtrl: AlertController) {
     presentAlert(alertCtrl, alertProps);
 }
 
-function handleDefaultEror(errorObj: any, alertCtrl: AlertController) {
+function handleDefaultError(errorObj: any, alertCtrl: AlertController) {
     const alertProps: AlertProps = {
-        header: 'Erro ' + errorObj.status + ': ' + errorObj.error,
-        message: errorObj.message,
+        header: 'Erro ' + (errorObj.status || 'desconhecido') + ': ' + (errorObj.error || 'Erro desconhecido'),
+        message: errorObj.message || 'Erro desconhecido',
         backdropDismiss: false,
         buttons: [
             {
@@ -116,7 +121,7 @@ async function presentAlert(alertCtrl: AlertController, alertProps: AlertProps) 
 function listErrors(messages: FieldMessage[]): string {
     let s: string = '';
     for (var i = 0; i < messages.length; i++) {
-        s = s + messages[i].fieldName.toUpperCase() + ": " + messages[i].message;
+        s = s + messages[i].fieldName.toUpperCase() + ": " + messages[i].message + '\n';
     }
     return s;
 }

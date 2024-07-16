@@ -34,13 +34,13 @@ export class HomePage implements OnInit {
   }
 
   ionViewDidEnter(){    
-    this.auth.refreshToken()?.subscribe({
-      next: (resp: HttpResponse<any>) => {
-        this.auth.successfulLogin(resp.headers.get('Authorization')!.substring(7));
-        this.router.navigate(['categories'])
-      },
-      error: err => console.error(err)
-    })
+    // this.auth.refreshToken()?.subscribe({
+    //   next: (resp: HttpResponse<any>) => {
+    //     this.auth.successfulLogin(resp.headers.get('Authorization')!.substring(7));
+    //     this.router.navigate(['categories'])
+    //   },
+    //   error: err => console.error(err)
+    // })
   }
 
   ngOnInit() {
