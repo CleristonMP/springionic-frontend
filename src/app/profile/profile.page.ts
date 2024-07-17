@@ -57,39 +57,25 @@ export class ProfilePage implements OnInit {
     }
   }
 
-  takeCameraPicture = async () => {
+  takePicture = async () => {
     this.cameraOn = true;
 
     const image = await Camera.getPhoto({
       quality: 90,
       allowEditing: true,
       resultType: CameraResultType.Uri,
-      source: CameraSource.Camera
+      source: CameraSource.Prompt,
+      promptLabelHeader: 'Foto',
+      promptLabelPhoto: 'Galeria',
+      promptLabelPicture: 'Tirar foto',
+      promptLabelCancel: 'Cancelar'
     })
       .then((photo: Photo) => {
         this.picture = photo;
         this.cameraOn = false;
       }).catch(err => {
         console.log(err);
-      });
-
-      return image;
-  };
-
-  getGalleryPicture = async () => {
-    this.cameraOn = true;
-
-    const image = await Camera.getPhoto({
-      quality: 90,
-      allowEditing: true,
-      resultType: CameraResultType.Uri,
-      source: CameraSource.Photos
-    })
-      .then((photo: Photo) => {
-        this.picture = photo;
         this.cameraOn = false;
-      }).catch(err => {
-        console.log(err);
       });
 
       return image;
@@ -105,8 +91,6 @@ export class ProfilePage implements OnInit {
         error: _ => { }
       });
   }
-  
-
 
   // this.clientService.uploadPicture(this.picture!)
   //   .then(resp => {

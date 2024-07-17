@@ -29,7 +29,8 @@ export class AuthService {
   }
 
   refreshToken() {
-    if (this.storage.getLocalUser()) {
+    const isTokenExpired = this.jwtHelper.isTokenExpired(this.storage.getLocalUser()?.token!) || false;
+    if (this.storage.getLocalUser() && !isTokenExpired) {
       return this.http.post(
         `${API_CONFIG.baseUrl}/auth/refresh_token`, {}, {
         observe: 'response',

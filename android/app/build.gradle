@@ -2,8 +2,8 @@ apply plugin: 'com.android.application'
 
 android {
     namespace "io.ionic.starter"
-    compileSdk rootProject.ext.compileSdkVersion
-    defaultConfig {
+  compileSdk 34
+  defaultConfig {
         applicationId "io.ionic.starter"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
@@ -16,10 +16,19 @@ android {
             ignoreAssetsPattern '!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~'
         }
     }
+    signingConfigs {
+      release {
+        storeFile file("C:\\temp\\android\\keystore.jks")
+        storePassword "kK3x2lH7"
+        keyAlias "SpringIonicProject"
+        keyPassword "kK3x2lH7"
+      }
+    }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
 }
